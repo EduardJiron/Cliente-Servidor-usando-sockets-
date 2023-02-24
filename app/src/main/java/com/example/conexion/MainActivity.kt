@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
                 val leer = DataInputStream(socket.getInputStream())
 
                 val message= leer.readUTF()
-                println("mensaje recibido por el servidor: $message")
+                println("Mensaje recibido por el servidor: $message")
 
 
                 runOnUiThread {
@@ -76,39 +76,38 @@ class MainActivity : AppCompatActivity() {
             val serverSocket = ServerSocket(1235)
             val clientSocket:Socket?
 
-                try{
+            try{
 
-                   clientSocket = serverSocket.accept()
+                clientSocket = serverSocket.accept()
 
-                    println("Conexion establecida desde:${clientSocket.inetAddress.hostAddress}")
-
-
-                    val leer = BufferedReader(InputStreamReader(
-                            clientSocket.getInputStream()))
+                println("Conexion establecida desde:${clientSocket.inetAddress.hostAddress}")
 
 
-                    val escribir = DataOutputStream(clientSocket.getOutputStream())
-
-                    escribir.writeUTF("Hola cliente")
-                    escribir.flush()
-                    val message:String= leer.readLine()
-                    Log.d("aparece por el amor de dios", String())
-
-                    System.out.println("Mensaje recibido por cliente: $message")
-                    escribir.flush()
-                    runOnUiThread { txtMensaje2.text = "Mensaje del cliente: $message" }
+                val leer = BufferedReader(InputStreamReader(
+                    clientSocket.getInputStream()))
 
 
+                val escribir = DataOutputStream(clientSocket.getOutputStream())
 
-                    clientSocket.close()
-                }
-                catch (ex:IOException){
-                    Log.e("TAG", "Error al leer la cadena: ${ex.message}")
-                }
+                escribir.writeUTF("Hola cliente")
+                escribir.flush()
+                val message:String= leer.readLine()
+                Log.d("aparece por el amor de dios", String())
+
+                System.out.println("Mensaje recibido por cliente: $message")
+                escribir.flush()
+                runOnUiThread { txtMensaje2.text = "Mensaje del cliente: $message" }
+
+
+
+                clientSocket.close()
             }
-
+            catch (ex:IOException){
+                Log.e("TAG", "Error al leer la cadena: ${ex.message}")
+            }
         }
-    }
 
+    }
+}
 
 
